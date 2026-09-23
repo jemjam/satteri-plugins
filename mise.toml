@@ -1,2 +1,4 @@
 [tools]
+node = "lts"
+pnpm = "latest"
 vp = "1.0.0-rc.0"

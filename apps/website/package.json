@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@astrojs/markdown-satteri": "catalog:",
+    "@jemjam/satteri-figcaptions": "workspace:*",
     "@jemjam/satteri-highlights": "workspace:*",
     "astro": "^7.3.5"
   },

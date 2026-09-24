@@ -190,6 +190,9 @@ importers:
       '@astrojs/markdown-satteri':
         specifier: 'catalog:'
         version: 0.4.2
+      '@jemjam/satteri-figcaptions':
+        specifier: workspace:*
+        version: link:../../packages/figcaptions
       '@jemjam/satteri-highlights':
         specifier: workspace:*
         version: link:../../packages/highlights

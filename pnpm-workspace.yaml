@@ -5,6 +5,7 @@ packages:
 catalogMode: prefer
 
 catalog:
+  "@astrojs/markdown-satteri": ^0.4.2
   "@types/node": ^24
   satteri: 0.10.5
   typescript: ^7.0.2
@@ -28,3 +29,6 @@ minimumReleaseAgeExclude:
   - "@voidzero-dev/vite-plus-win32-arm64-msvc@1.0.0-rc.0"
   - "@voidzero-dev/vite-plus-win32-x64-msvc@1.0.0-rc.0"
   - vite-plus@1.0.0-rc.0
+  - astro@7.3.5
+allowBuilds:
+  esbuild: true

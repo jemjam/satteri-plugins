@@ -197,6 +197,21 @@ importers:
         specifier: ^7.3.5
         version: 7.3.5(@types/node@26.6.2)(jiti@2.7.0)(typescript@7.0.2)(yaml@2.9.1)
 
+  packages/figcaptions:
+    devDependencies:
+      '@types/node':
+        specifier: ^26.1.1
+        version: 26.6.2
+      satteri:
+        specifier: 'catalog:'
+        version: 0.10.5
+      typescript:
+        specifier: ^7.0.2
+        version: 7.0.2
+      vite-plus:
+        specifier: 'catalog:'
+        version: 1.0.0-rc.0(@types/node@26.6.2)(@vitest/ui@5.0.1)(esbuild@0.28.2)(jiti@2.7.0)(typescript@7.0.2)(yaml@2.9.1)
+
   packages/highlights:
     devDependencies:
       '@types/node':

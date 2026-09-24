@@ -199,6 +199,9 @@ importers:
 
   packages/figcaptions:
     devDependencies:
+      '@jemjam/tsconfig':
+        specifier: workspace:*
+        version: link:../tsconfig
       '@types/node':
         specifier: ^26.1.1
         version: 26.6.2
@@ -214,6 +217,9 @@ importers:
 
   packages/highlights:
     devDependencies:
+      '@jemjam/tsconfig':
+        specifier: workspace:*
+        version: link:../tsconfig
       '@types/node':
         specifier: ^26.1.1
         version: 26.6.2
@@ -229,6 +235,8 @@ importers:
       vite-plus:
         specifier: 'catalog:'
         version: 1.0.0-rc.0(@types/node@26.6.2)(@vitest/ui@5.0.1)(esbuild@0.28.2)(jiti@2.7.0)(typescript@7.0.2)(yaml@2.9.1)
+
+  packages/tsconfig: {}
 
 packages:
 

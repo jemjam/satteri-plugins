@@ -8,6 +8,7 @@ catalog:
   "@astrojs/markdown-satteri": ^0.4.2
   "@types/node": ^24
   satteri: 0.10.5
+  sharp: ^0.35.4
   typescript: ^7.0.2
   vite: npm:@voidzero-dev/vite-plus-core@1.0.0-rc.0
   vite-plus: 1.0.0-rc.0

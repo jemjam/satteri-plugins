@@ -3,15 +3,15 @@
   "version": "0.1.0",
   "private": true,
   "description": "Satteri plugin to turn image blocks into figures with captions.",
-  "homepage": "https://github.com/author/library#readme",
+  "homepage": "https://github.com/jemjam/satteri-plugins#readme",
   "bugs": {
-    "url": "https://github.com/author/library/issues"
+    "url": "https://github.com/jemjam/satteri-plugins/issues"
   },
   "license": "MIT",
   "author": "Jem Bezooyen <code@jem.dev>",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/author/library.git"
+    "url": "git+https://github.com/jemjam/satteri-plugins.git"
   },
   "files": [
     "dist"
@@ -33,7 +33,6 @@
   },
   "devDependencies": {
     "@jemjam/tsconfig": "workspace:*",
-    "@types/node": "^26.1.1",
     "satteri": "catalog:",
     "typescript": "^7.0.2",
     "vite-plus": "catalog:"

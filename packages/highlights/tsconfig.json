@@ -1,6 +1,3 @@
 {
-  "extends": "@jemjam/tsconfig/library.json",
-  "compilerOptions": {
-    "types": ["node"]
-  }
+  "extends": "@jemjam/tsconfig/library.json"
 }

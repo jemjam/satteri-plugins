@@ -1,10 +1,17 @@
-# Vite+ Monorepo Starter
+# Jam's Satteri Plugins
 
-A starter for creating a Vite+ monorepo.
+A collection of small purpose-built satteri extensions that extend the markdown
+rendering pipeline.
 
 ## Development
 
-- Check everything is ready:
+`vp install` from the repo root to install and link any dependencies.
+
+Work on individual packages: see their readme or package scripts for info.
+
+Or from the repo root:
+
+- Check repo readiness (typecheck, lint, formatting)
 
 ```bash
 vp run ready
@@ -13,17 +20,11 @@ vp run ready
 - Run the tests:
 
 ```bash
-vp run -r test
+vp test
 ```
 
 - Build the monorepo:
 
 ```bash
 vp run -r build
-```
-
-- Run the development server:
-
-```bash
-vp run dev
 ```

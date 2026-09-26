@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "private": false,
   "description": "Add double-equals-style ==highlight== support to Satteri.",
-  "homepage": "https://github.com/jemjam/satteri-plugins#readme",
+  "homepage": "https://github.com/jemjam/satteri-plugins/tree/main/packages/highlights",
   "bugs": {
     "url": "https://github.com/jemjam/satteri-plugins/issues"
   },

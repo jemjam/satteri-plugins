@@ -8,6 +8,7 @@
     "ready": "vp check && vp run -r test && vp run -r build"
   },
   "devDependencies": {
+    "@changesets/changelog-github": "catalog:",
     "@changesets/cli": "catalog:",
     "vite-plus": "catalog:"
   },

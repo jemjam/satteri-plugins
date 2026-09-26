@@ -10,7 +10,7 @@
     }
   ],
   "commit": false,
-  "ignore": [],
+  "ignore": ["website"],
   "fixed": [],
   "linked": [],
   "updateInternalDependencies": "patch"

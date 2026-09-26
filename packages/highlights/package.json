@@ -1,7 +1,7 @@
 {
   "name": "@jemjam/satteri-highlights",
-  "version": "0.1.0",
-  "private": true,
+  "version": "0.0.1",
+  "private": false,
   "description": "Add double-equals-style ==highlight== support to Satteri.",
   "homepage": "https://github.com/jemjam/satteri-plugins#readme",
   "bugs": {
@@ -29,7 +29,7 @@
     "dev": "vp pack --watch",
     "test": "vp test",
     "check": "vp check",
-    "prepublishOnly": "vp run build"
+    "prepack": "vp run build"
   },
   "devDependencies": {
     "@jemjam/tsconfig": "workspace:*",

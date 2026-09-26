@@ -35,7 +35,7 @@ or separator positions also leave the paragraph unchanged.
 
 The zero-argument default export returns a per-document plugin factory. It
 requests source positions and skips MDX. Tested against Sätteri 0.10.5; no
-styling or configuration options are included. This package is private.
+styling or configuration options are included.
 
 ## Development
 

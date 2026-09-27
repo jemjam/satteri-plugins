@@ -7,6 +7,9 @@ import figcaptions from "@jemjam/satteri-figcaptions";
 
 // https://astro.build/config
 export default defineConfig({
+  site: "https://jemjam.github.io",
+  base: "/satteri-plugins",
+  trailingSlash: "never",
   markdown: {
     processor: satteri({
       mdastPlugins: [figcaptions(), highlights()],

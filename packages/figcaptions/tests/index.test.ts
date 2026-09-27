@@ -1,4 +1,4 @@
-import { defineMdastPlugin, markdownToHtml, mdxToJs, type MdastNode } from "satteri";
+import { defineMdastPlugin, markdownToHtml, mdxToJs } from "satteri";
 import { expect, test } from "vite-plus/test";
 import figcaptions from "../src/index.ts";
 
@@ -40,7 +40,6 @@ test.each([
   "![Boat][missing]\nCaption",
   "Caption\n![Boat][missing]",
   "Ordinary *prose*.",
-  "![Multi\nline](boat.jpg)\nCaption",
   "Before\n" + image + "\nAfter",
 ])("leaves nonmatching Markdown unchanged: %s", (source) => {
   expect(compile(source)).toBe(markdownToHtml(source).html);
@@ -123,27 +122,6 @@ test("reuses a plugin entry across independent compilations without state leakag
   expect(run(image + "\nCaption")).toBe(expected);
 });
 
-test.each(["paragraph", "image", "text"])("leaves nodes without %s positions unchanged", (type) => {
-  const strip = defineMdastPlugin({
-    name: "strip-positions",
-    options: { position: true },
-    paragraph(node, ctx) {
-      function copy(node: MdastNode): MdastNode {
-        const result = { ...node };
-        if (result.type === type) delete result.position;
-        if ("children" in result) Object.assign(result, { children: result.children.map(copy) });
-        return result;
-      }
-      ctx.replaceNode(node, copy(node));
-    },
-  });
-  for (const source of [image + "\nCaption", "Caption\n" + image]) {
-    expect(markdownToHtml(source, { mdastPlugins: [strip, figcaptions()] }).html).toBe(
-      markdownToHtml(source, { mdastPlugins: [strip] }).html,
-    );
-  }
-});
-
 test("leaves synthetic whitespace-only captions unchanged", () => {
   const blank = defineMdastPlugin({
     name: "blank-caption",
@@ -158,12 +136,33 @@ test("leaves synthetic whitespace-only captions unchanged", () => {
   );
 });
 
+test("accepts decoded whitespace at the image boundary", () => {
+  expect(compile("![Boat](boat.jpg) &#32;\nCaption")).toBe(
+    `<figure>${img}<figcaption>Caption</figcaption></figure>\n`,
+  );
+});
+
 test.each([
-  "Caption\ntext&#10;" + image,
-  image + "&#10;Caption",
-  "![Boat](boat.jpg) &#32;\nCaption",
-])("does not mistake character references for source line boundaries: %s", (source) => {
-  expect(compile(source)).toBe(markdownToHtml(source).html);
+  ["Caption\ntext&#10;" + image, `<figure><figcaption>Caption\ntext</figcaption>${img}</figure>\n`],
+  [image + "&#10;Caption", `<figure>${img}<figcaption>Caption</figcaption></figure>\n`],
+])("accepts decoded newline entities: %s", (source, expected) => {
+  expect(compile(source)).toBe(expected);
+});
+
+test.each([
+  ["![Multi\nline](boat.jpg)\nCaption", 'alt="Multi\nline"'],
+  ['![Boat](boat.jpg "Wrapped\ntitle")\nCaption', 'title="Wrapped\ntitle"'],
+])("accepts wrapped image metadata: %s", (source, attribute) => {
+  const html = compile(source);
+  expect(html).toContain("<figure>");
+  expect(html).toContain(attribute);
+  expect(html).toContain("<figcaption>Caption</figcaption>");
+});
+
+test("keeps a hard break on the line after the image inside the caption", () => {
+  expect(compile(image + "\n\\\nCaption")).toBe(
+    `<figure>${img}<figcaption><br>\nCaption</figcaption></figure>\n`,
+  );
 });
 
 test.each(["![船 🚢](boat.jpg)", '![船 🚢](boat.jpg "järvi")'])(

@@ -2,66 +2,31 @@ import { defineMdastPlugin, type Custom, type MdastNode, type PluginFactoryConte
 
 type Paragraph = Extract<MdastNode, { type: "paragraph" }>;
 type Inline = Paragraph["children"][number];
+type Edge = "start" | "end";
 
-/** Return caption children only when the boundary image occupies its own line. */
-function captionFor(
-  node: Readonly<Paragraph>,
-  source: string,
-  first: boolean,
-): Inline[] | undefined {
-  const image = node.children[first ? 0 : node.children.length - 1];
-  const position = image?.position;
-  if (
-    !node.position ||
-    !position ||
-    (image.type !== "image" && image.type !== "imageReference") ||
-    position.start.line !== position.end.line
-  )
-    return;
+const startSeparator = /^[\t ]*(?:\r\n|\r|\n)/;
+const endSeparator = /(?:\r\n|\r|\n)[\t ]*$/;
 
-  const edge = first ? "start" : "end";
-  const paragraphEdge = node.position[edge];
-  const imageEdge = position[edge];
-  if (
-    paragraphEdge.offset === undefined ||
-    imageEdge.offset === undefined ||
-    paragraphEdge.line !== imageEdge.line
-  )
-    return;
-  const padding = first
-    ? source.slice(paragraphEdge.offset, imageEdge.offset)
-    : source.slice(imageEdge.offset, paragraphEdge.offset);
-  if (!/^[\t ]*$/.test(padding)) return;
-  const imageOffset = first ? position.end.offset : position.start.offset;
-  if (imageOffset === undefined) return;
+function isImage(node: Inline | undefined): boolean {
+  return node?.type === "image" || node?.type === "imageReference";
+}
 
-  // Check the physical line in the original source. Container prefixes belong
-  // to the parser; the paragraph and neighboring nodes establish the other edge.
-  if (first && !/^[\t ]*(?:\\)?(?:\r\n|\r|\n)/.test(source.slice(imageOffset))) return;
+function isSeparator(node: Inline | undefined, edge: Edge): boolean {
+  return (
+    node?.type === "break" ||
+    (node?.type === "text" && (edge === "start" ? startSeparator : endSeparator).test(node.value))
+  );
+}
 
-  if (!first) {
-    const prefix = source
-      .slice(0, imageOffset)
-      .split(/\r\n|\r|\n/)
-      .at(-1)!;
-    if (!/^[\t >]*$/.test(prefix)) return;
-  }
-
+/** Strip the boundary separator and return nonempty caption children. */
+function captionChildren(node: Readonly<Paragraph>, first: boolean): Inline[] | undefined {
   const children = first ? node.children.slice(1) : node.children.slice(0, -1);
   const index = first ? 0 : children.length - 1;
   const boundary = children[index];
-  if (!boundary?.position) return;
-  if (boundary.type === "break") {
-    if (
-      first
-        ? boundary.position.start.line !== position.end.line
-        : boundary.position.end.line !== position.start.line
-    )
-      return;
+  if (boundary?.type === "break") {
     children.splice(index, 1);
-  } else if (boundary.type === "text") {
-    const separator = first ? /^[\t ]*(?:\r\n|\r|\n)/ : /(?:\r\n|\r|\n)[\t ]*$/;
-    if (!separator.test(boundary.value)) return;
+  } else if (boundary?.type === "text") {
+    const separator = first ? startSeparator : endSeparator;
     const value = boundary.value.replace(separator, "");
     if (value) children[index] = { ...boundary, value };
     else children.splice(index, 1);
@@ -83,21 +48,26 @@ export default function figcaptions() {
       ? null
       : defineMdastPlugin({
           name: "figcaptions",
-          options: { position: true },
           paragraph(node, ctx) {
-            const after = captionFor(node, ctx.source, true);
-            const before = captionFor(node, ctx.source, false);
-            if ((!after && !before) || (after && before)) return;
+            const children = node.children;
+            const head = children[0];
+            const tail = children.at(-1);
+            const leading = isImage(head) && isSeparator(children[1], "start");
+            const trailing = isImage(tail) && isSeparator(children.at(-2), "end");
+            if (leading === trailing) return;
+
+            const captionContent = captionChildren(node, leading);
+            if (!captionContent) return;
             const caption: Custom = {
               type: "figcaption",
               data: { hName: "figcaption" },
-              children: after ?? before!,
+              children: captionContent,
             };
-            const image = node.children[after ? 0 : node.children.length - 1];
+            const image = leading ? head! : tail!;
             ctx.replaceNode(node, {
               type: "figure",
               data: { hName: "figure" },
-              children: after ? [image, caption] : [caption, image],
+              children: leading ? [image, caption] : [caption, image],
             });
           },
         });

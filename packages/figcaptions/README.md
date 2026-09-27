@@ -39,10 +39,20 @@ styling or configuration options are included.
 
 ## Development
 
-From the repository root, with mise's configured tools:
+- Install dependencies:
 
-```sh
-mise exec -- vp -C packages/figcaptions test --run
-mise exec -- vp check
-mise exec -- vp -C packages/figcaptions pack
+```bash
+vp install
+```
+
+- Run the unit tests:
+
+```bash
+vp test
+```
+
+- Build the library:
+
+```bash
+vp pack
 ```

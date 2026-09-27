@@ -3,4 +3,4 @@
 "@jemjam/satteri-highlights": minor
 ---
 
-Expose declaration files through package exports.
+Explicitly list the typescript declarations in package.json exports.

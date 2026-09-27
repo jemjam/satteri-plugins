@@ -1,6 +1,6 @@
 {
   "name": "@jemjam/satteri-figcaptions",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "private": false,
   "description": "Satteri plugin to turn image blocks into figures with captions.",
   "homepage": "https://github.com/jemjam/satteri-plugins/tree/main/packages/figcaptions",

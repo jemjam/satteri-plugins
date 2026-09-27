@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "build": "vp run -r build",
-    "ready": "vp check && vp run -r test && vp run -r build"
+    "ready": "vp run -r build && vp check && vp run -r test"
   },
   "devDependencies": {
     "@changesets/changelog-github": "catalog:",

@@ -191,3 +191,16 @@ test("preserves caption images at an inline boundary", () => {
     '<figcaption>Caption <img src="icon.png" alt="Icon"></figcaption>',
   );
 });
+
+test.each([
+  [
+    image + "\nCaption ![Icon](icon.png)",
+    `<figure>${img}<figcaption>Caption <img src="icon.png" alt="Icon"></figcaption></figure>\n`,
+  ],
+  [
+    "![Icon](icon.png) Caption\n" + image,
+    `<figure><figcaption><img src="icon.png" alt="Icon"> Caption</figcaption>${img}</figure>\n`,
+  ],
+])("accepts images at both ends when only one has a separating break: %s", (source, expected) => {
+  expect(compile(source)).toBe(expected);
+});

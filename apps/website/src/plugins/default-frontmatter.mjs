@@ -9,10 +9,9 @@ export default function defaultFrontmatter(defaults) {
   return {
     name: "default-frontmatter",
     before(_node, ctx) {
-      const astro =
-        /** @type {{ frontmatter: Record<string, unknown> } | undefined} */ (
-          ctx.data.astro
-        );
+      const astro = /** @type {{ frontmatter: Record<string, unknown> } | undefined} */ (
+        ctx.data.astro
+      );
       if (!astro) return;
 
       for (const [key, value] of Object.entries(defaults)) {

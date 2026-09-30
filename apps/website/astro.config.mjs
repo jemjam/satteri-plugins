@@ -16,9 +16,7 @@ export default defineConfig({
     processor: satteri({
       mdastPlugins: [
         defaultFrontmatter({
-          layout: fileURLToPath(
-            new URL("./src/layouts/Layout.astro", import.meta.url),
-          ),
+          layout: fileURLToPath(new URL("./src/layouts/Layout.astro", import.meta.url)),
         }),
         figcaptions(),
         highlights(),

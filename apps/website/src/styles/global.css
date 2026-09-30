@@ -12,6 +12,11 @@ body {
   gap: 1rlh;
 }
 
+header {
+  font-style: italic;
+  text-align: right;
+}
+
 hr {
   width: 100%;
 }

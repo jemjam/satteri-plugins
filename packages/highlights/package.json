@@ -1,6 +1,6 @@
 {
   "name": "@jemjam/satteri-highlights",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": false,
   "description": "Add double-equals-style ==highlight== support to Satteri.",
   "homepage": "https://github.com/jemjam/satteri-plugins/tree/main/packages/highlights",

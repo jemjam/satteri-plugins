@@ -11,7 +11,7 @@ import defaultFrontmatter from "./src/plugins/default-frontmatter.mjs";
 export default defineConfig({
   site: "https://jemjam.github.io",
   base: "/satteri-plugins",
-  trailingSlash: "never",
+  trailingSlash: "ignore",
   markdown: {
     processor: satteri({
       mdastPlugins: [

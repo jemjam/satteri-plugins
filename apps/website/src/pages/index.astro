@@ -1,0 +1,36 @@
+---
+import { type MarkdownInstance } from "astro";
+import Layout from "../layouts/Layout.astro";
+
+interface Frontmatter {
+  title?: string;
+  frontmatter?: { title?: string };
+}
+
+// List out the markdown pages, no need to manually update this index
+const docs = import.meta.glob<MarkdownInstance<Frontmatter>>("./*.md", {
+  eager: true,
+});
+
+const docsLinks = Object.values(docs).map((doc) => {
+  const { frontmatter = {}, url = "" } = doc;
+  const { title = "" } = frontmatter;
+  return { title, url };
+});
+---
+
+<Layout title="Jam's Satteri Plugins">
+  <h1>Jam's Satteri Plugins</h1>
+  <p>
+    This is a very small website that houses a couple of example pages. Each 
+    page describes a satteri-plugin I've created and includes at least one 
+    example of the plugin in action. Check out the related pages:
+  </p>
+  <ul>
+    {docsLinks.map(doclink => <li><a href={doclink.url}>{doclink.title}</a></li>)}
+  </ul>
+  <footer>
+    Source code available on github:&nbsp;
+    <a href="https://github.com/jemjam/satteri-plugins">jemjam/satteri-plugins</a>
+  </footer>
+</Layout>

@@ -6,9 +6,9 @@ interface Props {
   frontmatter?: { title?: string };
 }
 
-const { title = Astro.props.frontmatter?.title ?? "Astro" } = Astro.props;
-const { BASE_URL } = import.meta.env
-console.log('base?', BASE_URL)
+const { title = Astro.props.frontmatter?.title ?? "Satteri Plugins" } =
+  Astro.props;
+const { BASE_URL } = import.meta.env;
 ---
 
 <!doctype html>
@@ -16,8 +16,8 @@ console.log('base?', BASE_URL)
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
-    <base href={`${BASE_URL}/`} />
-    <link rel="icon" href=`./favicon.png` type="image/png">
+    <base href=`${BASE_URL}/` />
+    <link rel="icon" href=`${BASE_URL}/favicon.png` type="image/png">
     <title>{title}</title>
   </head>
   <body>
